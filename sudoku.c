@@ -51,8 +51,8 @@ int main(int argc, char*argv[]){
 
     /* **************************************************************************/
 
-    /** **/
-    for(i = 1; i < 10; i++)/* trafega entre as linhas*/{
+    /** 4 fors para que não hajam numeros repetidos em cada linha. **/
+    for(i = 1; i < 10; i++)/* trafega entre as linhas */{
         for(j = (i-1)*81 + 1; j < i*81 - 9; j+=9)/* primeiro membro da implicação */{
             for(k = j+9; k < i*81; k+=9)/* segundo membro da implicação */{
                 for(l = 0; l < 9; l++)/* numero a ser analisado (de 1 a 9) */{
@@ -65,6 +65,27 @@ int main(int argc, char*argv[]){
     }
 
     /* **************************************************************************/
+
+    /** 4 fors para que não hajam numeros repetidos em cada coluna. **/
+    for(i = 1; i < 10; i++)/* trafega entre as colunas */{
+        for(j = (i-1)*9 + 1; j < 8*81; j+=81)/* primeiro membro da implicação */{
+            for(k = j+81; k < 9*81; k+=81)/* segundo membro da implicação */{
+                for(l = 0; l < 9; l++)/* numero a ser analisado (de 1 a 9) */{
+                    fprintf(saida, "-%d -%d 0 ", j+l, k+l);
+                    clausulas++;
+                }
+            }
+            fprintf(saida, "\n");
+        }
+    }
+
+    /* **************************************************************************/
+
+    /** **/
+    for(i = 1; i < 4; i++)
+    /* **************************************************************************/
+
+
     i = fseek(saida, 0, SEEK_SET);
     fprintf(saida, "p cnf %d %d ", 9*9*9, clausulas);
     fprintf(saida, "\nNumero de cláusula: %d", clausulas);
