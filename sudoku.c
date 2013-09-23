@@ -4,7 +4,7 @@ int main(int argc, char*argv[]){
     int sudoku[9][9][9];
     char aux;
     int i = 1;
-    int j, k;
+    int j, k, l;
     int clausulas = 0;
     FILE* entrada;
     FILE* saida;
@@ -41,12 +41,27 @@ int main(int argc, char*argv[]){
     for(i = 1; i<82; i++){
         for(j = (i-1)*9 +1; j < (i*9); j++){
             for(k = j+1; k < (9*i)+1; k++){
-                fprintf(saida, "-%d %d 0 ", j, k);
+                fprintf(saida, "-%d -%d 0 ", j, k);
                 clausulas++;
             }
             fprintf(saida, "\n");
         }
         /*fprintf(saida, "");*/
+    }
+
+    /* **************************************************************************/
+
+    /** **/
+    for(i = 1; i < 10; i++)/* trafega entre as linhas*/{
+        for(j = (i-1)*81 + 1; j < i*81 - 9; j+=9)/* primeiro membro da implicação */{
+            for(k = j+9; k < i*81; k+=9)/* segundo membro da implicação */{
+                for(l = 0; l < 9; l++)/* numero a ser analisado (de 1 a 9) */{
+                    fprintf(saida, "-%d -%d 0 ", j+l, k+l);
+                    clausulas++;
+                }
+            }
+            fprintf(saida, "\n");
+        }
     }
 
     /* **************************************************************************/
