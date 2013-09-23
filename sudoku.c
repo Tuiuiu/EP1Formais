@@ -12,6 +12,8 @@ int main(int argc, char*argv[]){
     saida = fopen("formula.txt", "w");
 
 
+    fprintf(saida, "                                                                                                      \n \n");
+
     /** Laço que percorrerá o arquivo de entrada e adcionará as variáveis que devem existir. **/
     while((aux = fgetc(entrada)) != EOF){
         if(aux != '0' && aux != ' ' && aux != '\n' && aux != EOF){
@@ -48,7 +50,9 @@ int main(int argc, char*argv[]){
     }
 
     /* **************************************************************************/
-    fprintf(saida, "Numero de cláusula: %d", clausulas);
+    i = fseek(saida, 0, SEEK_SET);
+    fprintf(saida, "p cnf %d %d ", 9*9*9, clausulas);
+    fprintf(saida, "\nNumero de cláusula: %d", clausulas);
     return 0;
 
 
