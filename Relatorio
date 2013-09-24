@@ -1,0 +1,92 @@
+######################################################################
+#            Nome : Lucas Dário                                      #
+#            Nº USP: 7990940                                         #
+#                                                                    #
+#            Mac239 - Professor Marcelo Finger                       #
+#            Exercício-Programa                                      #
+#                                                                    #
+######################################################################
+______________________________________________________________________
+
+Introdução :
+
+    O Programa escrito recebe pela entrada a configuração
+inicial de algum sudoku e retorna um arquivo de texto contendo uma
+fórmula na "forma clausal", de modo que possa ser lida por
+um resolvedor SAT e retornar se o problema é ou não é
+satisfazível.
+
+______________________________________________________________________
+
+Introduções para execução :
+
+    O arquivo 'sudoku.c' pode ser compilado do modo convencional:
+
+	$ gcc sudoku.c -o nome_do_executavel
+
+e sua execução se dá da seguinte maneira:
+
+	$ ./nome_do_executavel <arquivo_de_entrada> <nome_do_arquivo_de_saida>
+
+    O programa então gerará um arquivo texto com o nome escolhido
+que poderá ser passado como entrada para o resolvedor SAT.
+
+______________________________________________________________________
+
+Funcionamento do programa :
+
+    Basicamente o programa trata de regras básicas do jogo sudoku.
+    
+    Por convenção, tomaremos que na posição (1,1) [1ª casa da 1ª linha 
+do tabuleiro], a variável "1" corresponde ao valor '1' nessa casa, a
+variável "2" corresponde ao valor '2' nessa casa, assim até "9". Temos, 
+para a casa (1,2)[2ª casa na 1ª linha], que a variável "10" corresponde
+ao valor '1' nessa casa e assim por diante.
+    Temos, portanto, que uma variável X tem seu nome dado pela equação:
+81*i + 9*j + k, onde i é a linha, j é a coluna e k é o valor na casa.
+    Se o valor da variável X for '1' (valor verificado pelo resolvedor
+SAT), então a "casa" da posição (i,j) realmente possui o valor 'K'. Se
+o valor da variável for '0', então a "casa" da posição (i,j) não possui
+o valor 'K'.
+
+    Primeiramente, ao receber a entrada, o programa incluirá clausas 
+que exigem a existência dos termos mencionados pela entrada.
+
+    Após isso, a 1ª série de verificações servirá para conferir se
+todas as casas do "tabuleiro" estão, de fato, preenchidas.
+
+    Então, a 2ª série de verificações garantirão com que não existam 
+mais de um valor para a mesma "casa". Ou seja, em uma posição (i,j)
+do tabuleiro, essas verificações impedirão que a "casa", em questão,
+possua única e exclusivamente 1 valor.(se na casa houver o valor 1,
+isso implica que não há o valor '2', nem o '3', ..., nem o '9'. O mesmo
+segue para outros valores.)
+
+    Na 3ª série de verificações, o programa analisa o caso das linhas,
+onde não se pode ocorrer o mesmo valor mais de uma vez na mesma linha.
+    Se em uma linha já ocorreu o valor '1', ele não pode ocorrer novamente.
+
+    Na 4ª série de verificações, o processo é semelhante ao caso das
+linhas, porém diz respeito às colunas. O mesmo valor não pode aparecer
+mais de uma vez na mesma coluna. Como na 3ª série de verificações,
+se em uma "casa" ocorre o valor '1', isso implica que em nenhuma "casa"
+da mesma coluna(ou linha) ocorrera o valor '1'. O mesmo ocorre para 
+os valores '2' a '9'. 
+
+    Na 5ª série de verificações, novamente o processo é semelhante, 
+porém a região a ser analisada deixa de ser a coluna ou a linha e passa
+a ser uma região 3x3. O tabuleiro 9x9 é, portanto, dividido em 9 regiões
+de formato 3x3, e assim, se ocorrer o valor '1' em alguma posição do
+grid, nenhuma outra posição do mesmo grid pode possuir o valor '1'.
+
+______________________________________________________________________
+
+Conclusões :
+
+    Referências utilizadas encontradas na página do 'paca' da matéria.
+
+    Na execução do trabalho, foi utilizado o resolvedor 'minisat' para 
+testes : http://minisat.se/
+
+    
+  
